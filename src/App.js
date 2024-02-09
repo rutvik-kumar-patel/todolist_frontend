@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import {  Route, Routes, useNavigate } from 'react-router-dom';
+import Landing from './pages/Landing/Landing.js';
+import Login from './pages/Auth/Login.js';
+import Signup from './pages/Auth/Signup.js';
+import ToDoList from './pages/ToDo/ToDoList.js';
+import NoteState from './context/notes/NoteState';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NoteState>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/to-do-list" element={<ToDoList />} />
+          </Routes>
+        
+      </NoteState>
+    </>
   );
 }
 
