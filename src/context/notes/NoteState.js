@@ -1,10 +1,8 @@
 import NoteContext from "./noteContext";
-import { useState } from "react";
 import { message } from "antd";
 
 const NoteState = (props) => {
   const host = process.env.REACT_APP_API_HOST
-  const notesInitial = []
   
   // Get all Notes
   const getNotes = async () => {

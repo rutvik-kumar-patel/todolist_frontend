@@ -13,7 +13,7 @@ const Navbar = ({ active }) => {
     useEffect(() => {
         const userDetails = getUserDetails();
         setUser(userDetails);
-    }, []);
+    }, [navigate]);
 
     const handleLogout = () => {
         localStorage.removeItem("toDoAppUser");
