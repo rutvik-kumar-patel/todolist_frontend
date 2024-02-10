@@ -39,7 +39,6 @@ const ToDoList = () => {
       const response = await getNotes()
       setAllToDo(response);
     } catch (err) {
-      console.log(err);
       message.error(getErrorMessage(err));
     }
   };
@@ -51,7 +50,6 @@ const ToDoList = () => {
         const response = await getNotes()
         setAllToDo(response);
       } catch (err) {
-        console.log(err);
         message.error(getErrorMessage(err));
       }
     };
@@ -74,6 +72,10 @@ const ToDoList = () => {
     }
   }, [allToDo]);
 
+  useEffect(()=>{
+    getAllToDo()
+  },[allToDo])
+
   const handleSubmitTask = async () => {
 
     setLoading(true);
@@ -83,7 +85,6 @@ const ToDoList = () => {
       setIsAdding(false);
       getAllToDo();
     } catch (err) {
-      console.log(err);
       setLoading(false);
       message.error(getErrorMessage(err));
     }
@@ -101,19 +102,17 @@ const ToDoList = () => {
 
   const handleDelete = async (item) => {
     try {
-      // const response = await ToDoServices.deleteToDo(item._id);
       const response = await deleteNote(item._id)
-      // console.log("res:-",response);
-      // message.success(`${item.title} is Deleted Successfully!`);
+      
       getAllToDo();
     } catch (err) {
-      console.log(err);
+      
       message.error(getErrorMessage(err));
     }
   };
 
   const handleEdit = (item) => {
-    console.log(item);
+    
     setCurrentEditItem(item);
     setUpdatedTitle(item?.title);
     setUpdatedDescription(item?.description);
@@ -130,22 +129,21 @@ const ToDoList = () => {
       setIsEditing(false);
       getAllToDo();
     } catch (err) {
-      console.log(err);
+      
       setLoading(false);
       message.error(getErrorMessage(err));
     }
   };
 
   const handleUpdateStatus = async (id, title, description,status) => {
-    console.log(id);
-    console.log(status)
+  
     try {
       const response = await editNote(id, title, description, status);
-      console.log(response)
+      
       message.success("Task Status Updated Successfully!");
       getAllToDo();
     } catch (err) {
-      console.log(err);
+      
       message.error(getErrorMessage(err));
     }
   };
@@ -162,7 +160,6 @@ const ToDoList = () => {
     let filteredList = allToDo.filter((item) =>
       item.title.toLowerCase().match(query.toLowerCase())
     );
-    console.log(filteredList);
     if (filteredList.length > 0 && query) {
       setFilteredToDo(filteredList);
     } else {

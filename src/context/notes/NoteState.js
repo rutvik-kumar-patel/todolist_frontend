@@ -6,8 +6,6 @@ const NoteState = (props) => {
   const host = process.env.REACT_APP_API_HOST
   const notesInitial = []
   
-  const [notes, setNotes] = useState(notesInitial)
-
   // Get all Notes
   const getNotes = async () => {
     // API Call 
@@ -25,8 +23,7 @@ const NoteState = (props) => {
 
   // Add a Note
   const addNote = async (title, description) => {
-    // TODO: API Call
-    // API Call 
+    
     const response = await fetch(`${host}/api/notes/addnote`, {
       method: 'POST',
       headers: {
@@ -36,15 +33,11 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description,isCompleted:false})
     });
     const note = await response.json();
-    console.log(note)
     message.success("To Do Task Added Successfully!");
-    // console.log(note)
-    // setNotes(notes.concat(note))
   }
 
   // Delete a Note
   const deleteNote = async (id) => {
-    // API Call
 
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: 'DELETE',
@@ -61,7 +54,7 @@ const NoteState = (props) => {
 
   // Edit a Note
   const editNote = async (id, title, description, isCompleted) => {
-    console.log(isCompleted)
+    
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: 'PUT',
       headers: {
@@ -77,7 +70,7 @@ const NoteState = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
+    <NoteContext.Provider value={{ addNote, deleteNote, editNote, getNotes }}>
       {props.children}
     </NoteContext.Provider>
   )

@@ -4,6 +4,7 @@ import login from '../../assets/login.png';
 import { Button, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { getErrorMessage } from '../../util/GetError';
+import Item from 'antd/es/list/Item';
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({ firstName: "", lastName: "", email: "", password: "" })
@@ -14,14 +15,9 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     const { firstName, lastName, email, password } = credentials;
     const host = process.env.REACT_APP_API_HOST
-
     try {
-
-
-
       setLoading(true);
       e.preventDefault();
-      setLoading(true);
       const response = await fetch(`${host}/api/auth/createuser`, {
         method: "POST",
         headers: {
@@ -29,9 +25,9 @@ const Signup = () => {
         },
         body: JSON.stringify({ firstName, lastName, email, password }),
       });
+
       const json = await response.json()
-      console.log("res:-", json);
-      if (json.success) {
+      if (json.authtoken) {
         localStorage.setItem('toDoAppUser', json.authtoken);
         message.success("Logged in Successfully!");
         navigate('/to-do-list');
@@ -42,12 +38,10 @@ const Signup = () => {
         setLoading(false);
       }
     } catch (err) {
-      console.log(err);
-      message.error(getErrorMessage(err));
       setLoading(false);
+      message.error(getErrorMessage(err));
     }
   }
-
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })

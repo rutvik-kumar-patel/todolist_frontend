@@ -11,6 +11,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const host = process.env.REACT_APP_API_HOST
+
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -22,7 +23,7 @@ function Login() {
         body: JSON.stringify({ email: email, password: password }),
       });
       const json = await response.json()
-      console.log("res:-", json);
+
       if (json.authtoken) {
         localStorage.setItem('toDoAppUser', json.authtoken);
         message.success("Logged in Successfully!");
@@ -34,7 +35,6 @@ function Login() {
         setLoading(false);
       }
     } catch (err) {
-      console.log(err);
       message.error(getErrorMessage(err));
       setLoading(false);
     }
